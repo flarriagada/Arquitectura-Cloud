@@ -160,3 +160,68 @@ Los resultados podrían verse afectados por errores de transcripción, expresion
 Por ello, el sistema deberá contemplar categorías indeterminadas, mantener referencias a las transcripciones y permitir que los resultados puedan ser contrastados con su contenido original.
 
 Las definiciones exactas de cálculo, reglas de clasificación, períodos de agregación, tratamiento de duplicados y criterios de evaluación se desarrollarán en la siguiente etapa de especificación de métricas.
+
+
+# 3. Especificación de métricas y reglas de análisis
+
+## 3.1. Criterios generales
+
+Las métricas generadas por la plataforma se calcularán a partir de las grabaciones procesadas y sus respectivas transcripciones, manteniendo la identificación de la empresa a la que pertenece cada llamada.
+
+Para evitar duplicidades, cada llamada deberá contar con un identificador único dentro de su empresa. Los reintentos de procesamiento no deberán generar registros adicionales en los resultados analíticos.
+
+Se distinguirán dos grupos de indicadores: métricas relacionadas con el contenido de las conversaciones y métricas operacionales asociadas al volumen de grabaciones y al funcionamiento de la plataforma.
+
+Los indicadores analíticos utilizarán como referencia la fecha original de cada llamada, permitiendo comparar los resultados entre períodos. Las métricas de funcionamiento utilizarán los registros de ejecución del procesamiento.
+
+Los resultados agregados incluirán únicamente llamadas cuyo procesamiento haya finalizado correctamente, salvo los indicadores destinados específicamente a medir errores. Las llamadas con fallos, pendientes o sin información suficiente se identificarán de manera diferenciada.
+
+## 3.2. Métricas analíticas del contenido
+
+### Distribución de tipos de interacción
+
+Se calculará la cantidad y proporción de llamadas clasificadas según su tipo de interacción. Inicialmente se consideran las categorías consulta, reclamo y solicitud, además de categorías para conversaciones mixtas o indeterminadas.
+
+La proporción de cada categoría se calculará dividiendo la cantidad de llamadas asociadas a ella por el total de llamadas procesadas correctamente durante el período considerado.
+
+Los criterios para asignar estas categorías se definirán en las reglas de clasificación, evitando que conversaciones ambiguas sean asignadas arbitrariamente.
+
+### Frecuencia de temas recurrentes
+
+Se calculará la cantidad de llamadas asociadas a cada tema identificado en las transcripciones.
+
+Los temas podrán variar según el contexto de cada empresa. Una conversación podrá asociarse a más de un tema cuando su contenido lo justifique.
+
+La frecuencia de un tema se calculará considerando el número de llamadas distintas en las que fue identificado, evitando que las menciones repetidas dentro de una misma conversación incrementen artificialmente el número de llamadas asociadas.
+
+### Frecuencia de términos relevantes
+
+Se identificarán las apariciones de palabras y expresiones relevantes dentro de las transcripciones.
+
+Para cada término se distinguirán dos medidas: su frecuencia total de aparición y la cantidad de llamadas distintas en las que se encuentra presente.
+
+Se establecerán criterios de normalización y exclusión de palabras comunes, además de mecanismos para evitar que información personal sea presentada como parte de los términos frecuentes.
+
+### Evolución temporal de indicadores
+
+Los indicadores anteriores podrán agruparse por períodos para analizar sus variaciones.
+
+Se podrán comparar cantidades y proporciones de tipos de interacción, frecuencia de temas y presencia de términos relevantes entre períodos.
+
+Estas comparaciones describirán cambios observados en las conversaciones procesadas, sin atribuir automáticamente sus causas ni emitir recomendaciones de negocio.
+
+## 3.3. Métricas operacionales
+
+De forma complementaria, la plataforma calculará indicadores que permitan conocer el volumen de grabaciones procesadas y el funcionamiento del servicio.
+
+Se consideran la cantidad de llamadas procesadas correctamente, el volumen total de audio en horas, la duración promedio de las grabaciones, el tiempo de procesamiento y la tasa de trabajos fallidos.
+
+Estos indicadores se calcularán a partir de los metadatos de las llamadas y los registros de procesamiento. Su finalidad será describir la operación del servicio, sin utilizarlos como medidas directas de la calidad de atención de los agentes.
+
+## 3.4. Consideraciones sobre los resultados
+
+Las métricas obtenidas mediante la transcripción y clasificación automática estarán sujetas a posibles errores de reconocimiento e interpretación.
+
+Por ello, las clasificaciones deberán contemplar resultados inciertos y conservar referencias a las transcripciones originales para permitir su revisión.
+
+La selección del método de clasificación y los criterios de evaluación de su calidad se desarrollarán posteriormente, considerando las características de las conversaciones y la viabilidad técnica de la plataforma.
